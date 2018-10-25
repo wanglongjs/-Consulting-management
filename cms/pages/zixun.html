@@ -1,12 +1,13 @@
 <script type="text/javascript">
     $(function () {
         $(".zixunContent").height($(".rightDiv").height() - 100);
-        //新增
-
 
 
         //请求所有内容
-        $.get("http://120.78.164.247:8099/manager/article/findArticle", { page: 4, pageSize:6}, function (results) {
+        $.get("http://120.78.164.247:8099/manager/article/findArticle", {
+            page: 4,
+            pageSize: 6
+        }, function (results) {
 
             var res = results.data;
             var lists = res.list
@@ -20,12 +21,30 @@
                 // console.log(ts);
                 $("tbody").append(clon);
             })
+            //新增
+            $(".mont").click(function () {
+                var til = $(".biao").children(":nth-child(2)").val()
+                var list = $(".lanmu").children(":nth-child(2)").val();
+                var tile=parseInt(til)
+                console.log(typeof tile)
+                console.log(typeof list)
+                var o = {
+                    title:til,
+                    liststyle: list
+                }
 
+                $.post("http://120.78.164.247:8099/manager/article/saveOrUpdateArticle", o,
+                    function (results) {
+                        if (results.status === 200) {
+                            $(".rightDiv_content").load('./pages/zixun.html')
+                        }
+                    })
+            })
             //批量删除
             $(".piliang").click(function () {
                 $("input:checkbox").each(function (index, item) {
                     var arr = [];
-                    var inputs =Number( $(item).val());
+                    var inputs = Number($(item).val());
                     console.log(inputs)
                     arr.push(inputs)
 
@@ -37,11 +56,14 @@
                         };
                         console.log(inps);
                     }
-                    $.post("http://120.78.164.247:8099/manager/article/batchDeleteArticle", inps, function (results) {
-                        if (results.status === 200) {
-                            $(".rightDiv_content").load('./pages/zixun.html')
-                        }
-                    })
+                    $.post(
+                        "http://120.78.164.247:8099/manager/article/batchDeleteArticle",
+                        inps,
+                        function (results) {
+                            if (results.status === 200) {
+                                $(".rightDiv_content").load('./pages/zixun.html')
+                            }
+                        })
 
                 })
             })
@@ -54,7 +76,9 @@
                 // var o = {
                 //     id: Number(idss)
                 // }
-                $.get("http://120.78.164.247:8099/manager/article/deleteArticleById", { id: ss }, function (results) {
+                $.get("http://120.78.164.247:8099/manager/article/deleteArticleById", {
+                    id: ss
+                }, function (results) {
                     if (results.status === 200) {
                         $(".rightDiv_content").load('./pages/zixun.html')
                     }
@@ -64,8 +88,6 @@
         });
 
     });
-
-
 </script>
 
 <div class="zixunContent">
@@ -91,11 +113,11 @@
                 </div>
                 <div class="modal-body">
                     <form action="#">
-                        <div class=" form-group">
+                        <div class=" form-group biao">
                             <label for="Title">标题</label>
                             <input type="text" class=" form-control" id="Title">
                         </div>
-                        <div class=" form-group">
+                        <div class=" form-group lanmu">
                             <label for="Belonged">所属栏目</label>
                             <input type="text" class=" form-control" id="Belonged">
                         </div>

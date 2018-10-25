@@ -67,7 +67,7 @@
         console.log("请求所有栏目信息", results);
         if (results.status === 200) {
             var lanmus = results.data;
-            console.log(lanmus)
+            console.log("nishi", lanmus)
             lanmus.forEach(function (item) {
 
                 var clone = $(".hidden").clone();
@@ -134,8 +134,9 @@
                 var name = $(".lanmuName").val();
                 var des = $(".des").val();
                 var parent = $("#parent").val();
-                var hiddenId = $(".hiddenId").text()
-
+                var hiddenId = $(".hiddenId").text();
+                
+                
                 if (hiddenId) {
                     if (name && des) {
 
@@ -185,9 +186,10 @@
                     }
                 }
                 // console.log(name, des, parent);
-                $.post("http://120.78.164.247:8099/manager/category/saveOrUpdateCategory", o, function (results) {
+                $.post("http://120.78.164.247:8099/manager/category/saveOrUpdateCategory", o, function (
+                    results) {
                     if (results.status === 200) {
-                        $(".modal").modal('hide');
+                        var ss=$(".modal").modal('hide');
                         $(".rightDiv_content").load('pages/lanmu.html')
                     }
                 })
@@ -214,13 +216,14 @@
                         ids: ids.toString(),
                     };
                     // console.log("这个有是",o)
-                    $.post("http://120.78.164.247:8099/manager/category/batchDeleteCategory",o, function (results) {
-                        if (results.status === 200) {
-                            $(".rightDiv_content").load('pages/lanmu.html')
+                    $.post("http://120.78.164.247:8099/manager/category/batchDeleteCategory", o,
+                        function (results) {
+                            if (results.status === 200) {
+                                $(".rightDiv_content").load('pages/lanmu.html')
 
-                        }
-                        // alert("succes", results)
-                    })
+                            }
+                            // alert("succes", results)
+                        })
 
                 }
             })
@@ -232,10 +235,11 @@
                 console.log("这个id是", ids);
 
                 var o = {
-                    id:Number(ids)
+                    id: Number(ids)
                 };
                 console.log("这个o", o)
-                $.get("http://120.78.164.247:8099/manager/category/deleteCategoryById",o, function (results) {
+                $.get("http://120.78.164.247:8099/manager/category/deleteCategoryById", o, function (
+                    results) {
                     if (results.status === 200) {
                         $(".rightDiv_content").load('pages/lanmu.html')
                     } else {
